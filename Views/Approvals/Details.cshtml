@@ -144,13 +144,13 @@
                 <div class="card-body">
                     <dl class="row mb-0">
                         <dt class="col-sm-4 text-muted">Talep Eden</dt>
-                        <dd class="col-sm-8 fw-bold">@Model.Requester.FullName</dd>
+                        <dd class="col-sm-8 fw-bold">@Model.Requester?.FullName</dd>
 
                         <dt class="col-sm-4 text-muted">Departman</dt>
-                        <dd class="col-sm-8">@Model.Requester.Department</dd>
+                        <dd class="col-sm-8">@Model.Requester?.Department</dd>
 
                         <dt class="col-sm-4 text-muted">Süreç</dt>
-                        <dd class="col-sm-8"><span class="badge bg-info text-dark">@Model.ProcessDefinition.ProcessName</span></dd>
+                        <dd class="col-sm-8"><span class="badge bg-info text-dark">@Model.ProcessDefinition?.ProcessName</span></dd>
 
                         <dt class="col-sm-4 text-muted">Konu</dt>
                         <dd class="col-sm-8">@Model.RequestTitle</dd>
@@ -209,7 +209,7 @@
                         <div class="timeline-badge @badgeClass"><i class="bi @iconClass"></i></div>
                         <div class="timeline-panel shadow-sm">
                             <div class="d-flex justify-content-between">
-                                <h6 class="fw-bold mb-1">@log.Processor.FullName</h6>
+                                <h6 class="fw-bold mb-1">@log.Processor?.FullName</h6>
                                 <small class="text-muted">@log.ActionDate.ToString("g")</small>
                             </div>
                             <p class="mb-0 text-muted">@log.Comments</p>

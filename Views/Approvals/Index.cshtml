@@ -79,11 +79,11 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="bg-secondary text-white rounded-circle d-flex justify-content-center align-items-center me-2" style="width:35px; height:35px; font-size:0.8rem;">
-                                        @item.Requester.FirstName.Substring(0, 1)@item.Requester.LastName.Substring(0, 1)
+                                        @item.Requester?.FirstName.Substring(0, 1)@item.Requester?.LastName.Substring(0, 1)
                                     </div>
                                     <div>
-                                        <div class="fw-bold">@item.Requester.FullName</div>
-                                        <small class="text-muted">@item.Requester.Department</small>
+                                        <div class="fw-bold">@item.Requester?.FullName</div>
+                                        <small class="text-muted">@item.Requester?.Department</small>
                                     </div>
                                 </div>
                             </td>

@@ -31,8 +31,8 @@ else
                     {
                         <tr>
                             <td>
-                                <strong>@item.Requester.FullName</strong><br />
-                                <small class="text-muted">@item.ProcessDefinition.ProcessName</small>
+                                <strong>@item.Requester?.FullName</strong><br />
+                                <small class="text-muted">@item.ProcessDefinition?.ProcessName</small>
                             </td>
                             <td>@item.RequestTitle</td>
                             <td>@item.CompletedDate?.ToString("g")</td>

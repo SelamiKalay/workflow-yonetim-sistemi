@@ -151,6 +151,7 @@ public class RequestsController : Controller
     public async Task<IActionResult> Details(int id)
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
         var request = await _context.WorkflowRequests
             .Include(r => r.Requester)
             .Include(r => r.ProcessDefinition)

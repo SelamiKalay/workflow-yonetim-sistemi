@@ -51,6 +51,7 @@ public class NotificationsController : Controller
     public async Task<IActionResult> MarkAllAsRead()
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Unauthorized(); // oturum geçerli ama kullanıcı silinmiş olabilir
         var unread = await _context.Notifications.Where(n => n.UserId == user.Id && !n.IsRead).ToListAsync();
 
         foreach (var n in unread) n.IsRead = true;

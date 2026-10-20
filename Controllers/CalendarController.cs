@@ -36,9 +36,9 @@ public class CalendarController : Controller
             .Select(e => new
             {
                 id = e.Id,
-                title = $"{e.Requester.FirstName} {e.Requester.LastName} - {e.RequestTitle}",
-                start = e.StartDate.Value.ToString("yyyy-MM-dd"),
-                end = e.EndDate.Value.AddDays(1).ToString("yyyy-MM-dd"), // FullCalendar bitiş gününü dahil etmez, o yüzden +1 gün ekliyoruz
+                title = $"{e.Requester!.FirstName} {e.Requester.LastName} - {e.RequestTitle}",
+                start = e.StartDate!.Value.ToString("yyyy-MM-dd"), // Where: StartDate != null
+                end = e.EndDate!.Value.AddDays(1).ToString("yyyy-MM-dd"), // FullCalendar bitiş gününü dahil etmez, o yüzden +1 gün ekliyoruz
                 color = "#28a745", // Yeşil renk (Onaylı olduğu için)
 
                 // --- DİNAMİK URL (ÇÖZÜM BURASI) ---

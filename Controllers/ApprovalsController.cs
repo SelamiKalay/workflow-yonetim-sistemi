@@ -34,6 +34,7 @@ public class ApprovalsController : Controller
     public async Task<IActionResult> Index(string searchString, RequestStatus? statusFilter)
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
         var query = _context.WorkflowRequests
             .Include(r => r.Requester)
             .Include(r => r.ProcessDefinition)
@@ -41,9 +42,9 @@ public class ApprovalsController : Controller
 
         if (!string.IsNullOrEmpty(searchString))
         {
-            query = query.Where(r => r.Requester.FirstName.Contains(searchString)
-                                  || r.Requester.LastName.Contains(searchString)
-                                  || r.RequestTitle.Contains(searchString));
+            query = query.Where(r => r.Requester!.FirstName.Contains(searchString)
+                                  || r.Requester!.LastName.Contains(searchString)
+                                  || r.RequestTitle!.Contains(searchString));
         }
 
         if (statusFilter.HasValue) query = query.Where(r => r.Status == statusFilter.Value);
@@ -75,6 +76,7 @@ public class ApprovalsController : Controller
     public async Task<IActionResult> Process(int requestId, string decision, string comments)
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
         var request = await _context.WorkflowRequests.FindAsync(requestId);
 
         if (request == null || request.CurrentApproverId != user.Id) return BadRequest("Yetkisiz işlem.");
@@ -112,6 +114,7 @@ public class ApprovalsController : Controller
     public async Task<IActionResult> ProcessBulk(List<int> selectedIds, string decision)
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
         if (selectedIds == null || !selectedIds.Any()) return RedirectToAction(nameof(Index));
 
         var requestsToProcess = await _context.WorkflowRequests
@@ -147,6 +150,7 @@ public class ApprovalsController : Controller
     public async Task<IActionResult> RejectedIndex()
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
         var rejectedRequests = await _context.WorkflowRequests
             .Include(r => r.Requester)
             .Include(r => r.ProcessDefinition)
@@ -161,6 +165,7 @@ public class ApprovalsController : Controller
     {
         var request = await _context.WorkflowRequests.FindAsync(id);
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
 
         if (request != null && request.CurrentApproverId == user.Id && request.Status == RequestStatus.Rejected)
         {

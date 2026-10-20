@@ -31,9 +31,9 @@ public class TurkishIdentityErrorDescriber : IdentityErrorDescriber
     public override IdentityError DuplicateEmail(string email)
         => new IdentityError { Code = nameof(DuplicateEmail), Description = $"'{email}' e-posta adresi zaten kayıtlı." };
 
-    public override IdentityError InvalidUserName(string userName)
+    public override IdentityError InvalidUserName(string? userName)
         => new IdentityError { Code = nameof(InvalidUserName), Description = $"Kullanıcı adı geçersiz karakterler içeriyor." };
 
-    public override IdentityError InvalidEmail(string email)
+    public override IdentityError InvalidEmail(string? email)
         => new IdentityError { Code = nameof(InvalidEmail), Description = $"Geçersiz e-posta adresi." };
 }

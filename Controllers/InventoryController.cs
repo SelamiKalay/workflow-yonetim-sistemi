@@ -187,6 +187,7 @@ public class InventoryController : Controller
     public async Task<IActionResult> MyInventory()
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
 
         var myItems = await _context.InventoryAssignments
             .Include(x => x.InventoryItem)
@@ -201,6 +202,7 @@ public class InventoryController : Controller
     public async Task<IActionResult> AcceptItem(int assignmentId, string signatureData)
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
 
         // İlişkili verilerle birlikte çekiyoruz (Item adını bildirimde kullanmak için)
         var assignment = await _context.InventoryAssignments
@@ -252,6 +254,7 @@ public class InventoryController : Controller
     public async Task<IActionResult> RequestReturn(int assignmentId)
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
 
         var assignment = await _context.InventoryAssignments
             .Include(x => x.InventoryItem)

@@ -19,10 +19,10 @@ else
                 <div class="card shadow-sm border-start border-4 @(assign.IsAccepted ? "border-success" : "border-danger")">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <h5 class="card-title">@assign.InventoryItem.ItemName</h5>
-                            <span class="badge bg-light text-dark border">@assign.InventoryItem.Category</span>
+                            <h5 class="card-title">@assign.InventoryItem?.ItemName</h5>
+                            <span class="badge bg-light text-dark border">@assign.InventoryItem?.Category</span>
                         </div>
-                        <p class="card-text text-muted mb-2">Seri No: @assign.InventoryItem.SerialNumber</p>
+                        <p class="card-text text-muted mb-2">Seri No: @assign.InventoryItem?.SerialNumber</p>
 
                         <hr />
 

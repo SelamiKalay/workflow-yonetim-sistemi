@@ -26,6 +26,7 @@ public class TaskController : Controller
     public async Task<IActionResult> MyTasks()
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
         var tasks = await _context.WorkTasks
             .Include(t => t.AssignedBy)
             .Where(t => t.AssignedToId == user.Id)
@@ -39,6 +40,7 @@ public class TaskController : Controller
     public async Task<IActionResult> AssignedTasks()
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
         var tasks = await _context.WorkTasks
             .Include(t => t.AssignedTo)
             .Where(t => t.AssignedById == user.Id)
@@ -72,6 +74,7 @@ public class TaskController : Controller
     public async Task<IActionResult> Create(WorkTask model, IFormFile? taskFile)
     {
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
 
         ModelState.Remove("AssignedBy");
         ModelState.Remove("AssignedById");
@@ -121,6 +124,7 @@ public class TaskController : Controller
     {
         var task = await _context.WorkTasks.FindAsync(id);
         var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge(); // oturum geçerli ama kullanıcı silinmiş olabilir
 
         if (task != null && task.AssignedToId == user.Id && (task.Status == Models.TaskStatus.Assigned || task.Status == Models.TaskStatus.RevisionRequested))
         {
