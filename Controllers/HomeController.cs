@@ -27,7 +27,7 @@ public class HomeController : Controller
 
         if (User.IsInRole("Personel"))
         {
-            var currentUser = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            var currentUser = _context.Users.FirstOrDefault(u => u.UserName == User.Identity!.Name);
             if (currentUser != null)
             {
                 query = query.Where(r => r.RequesterId == currentUser.Id);
@@ -42,7 +42,7 @@ public class HomeController : Controller
         return View();
     }
 
-    // 2. DÝL DEÐÝÞTÝRME METODU (GÜNCELLENMÝÞ HALÝ)
+    // 2. DÄ°L DEÄžÄ°ÅžTÄ°RME METODU (GÃœNCELLENMÄ°Åž HALÄ°)
     [AllowAnonymous]
     [HttpPost]
     public IActionResult SetLanguage(string culture, string returnUrl)
@@ -53,22 +53,22 @@ public class HomeController : Controller
             new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
         );
 
-        // Eðer dönüþ URL'i boþsa ana sayfaya at (Hata vermemesi için)
+        // EÄŸer dÃ¶nÃ¼ÅŸ URL'i boÅŸsa ana sayfaya at (Hata vermemesi iÃ§in)
         return LocalRedirect(returnUrl ?? "/");
     }
 
-    // 3. SÝSTEMÝ SIFIRLAMA (ADMIN)
+    // 3. SÄ°STEMÄ° SIFIRLAMA (ADMIN)
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> ResetSystem()
     {
         _context.RequestLogs.RemoveRange(_context.RequestLogs);
         _context.WorkflowRequests.RemoveRange(_context.WorkflowRequests);
         await _context.SaveChangesAsync();
-        TempData["Success"] = "Sistem sýfýrlandý.";
+        TempData["Success"] = "Sistem sÄ±fÄ±rlandÄ±.";
         return RedirectToAction("Index");
     }
 
-    // 4. ESKÝLERÝ TEMÝZLE (ADMIN)
+    // 4. ESKÄ°LERÄ° TEMÄ°ZLE (ADMIN)
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> CleanOldData()
     {

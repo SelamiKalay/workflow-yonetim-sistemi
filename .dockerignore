@@ -1,0 +1,14 @@
+bin/
+obj/
+.vs/
+.vscode/
+.git/
+.github/
+*.user
+*.suo
+appsettings.Development.json
+.env
+wwwroot/uploads/
+wwwroot/task_files/
+wwwroot/signatures/
+wwwroot/cvs/

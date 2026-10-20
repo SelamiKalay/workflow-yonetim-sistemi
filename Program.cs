@@ -8,14 +8,14 @@ using WorkFlowBasic.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Veritabaný Baðlantýsý
+// 1. VeritabanÄ± BaÄŸlantÄ±sÄ±
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("Baðlantý cümlesi bulunamadý.");
+    ?? throw new InvalidOperationException("BaÄŸlantÄ± cÃ¼mlesi bulunamadÄ±.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-// 2. Identity Ayarlarý
+// 2. Identity AyarlarÄ±
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => {
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
@@ -35,7 +35,7 @@ builder.Services.AddTransient<NotificationService>();
 builder.Services.AddHostedService<CleanupBackgroundService>();
 builder.Services.AddSignalR();
 
-// 4. MVC ve API Ayarlarý
+// 4. MVC ve API AyarlarÄ±
 builder.Services.AddControllersWithViews()
     .AddJsonOptions(options =>
     {
@@ -67,7 +67,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Middleware (Güvenlik)
+// Middleware (GÃ¼venlik)
 app.UseMiddleware<UserActiveCheckMiddleware>();
 
 app.MapStaticAssets();
@@ -78,7 +78,7 @@ app.MapControllerRoute(
 
 app.MapHub<GeneralHub>("/generalHub");
 
-// Veri Yükleme
+// Veri YÃ¼kleme
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -91,7 +91,7 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Veritabaný hatasý.");
+        logger.LogError(ex, "VeritabanÄ± hatasÄ±.");
     }
 }
 
